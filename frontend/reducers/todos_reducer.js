@@ -1,30 +1,18 @@
 import React from 'react';
 import  {merge} from 'lodash';
-import { REQUEST_TODOS, RECEIVE_TODOS } from '../actions/todo_actions.js';
+import { RECEIVE_TODO, RECEIVE_TODOS } from '../actions/todo_actions.js';
 
-const defaultState = {
-  "1": {
-    id: 1,
-    title: "wash car",
-    body: "with soap",
-    done: false
-  },
-  "2": {
-    id: 2,
-    title: "wash dog",
-    body: "with shampoo",
-    done: true
-  },
-};
+const defaultState = {};
 
 const TodosReducer = (state = defaultState, action) => {
   Object.freeze(state);
   const newState = merge({}, state);
   switch (action.type) {
-    case REQUEST_TODOS:
-      return newState;
     case RECEIVE_TODOS:
-      action.todos.forEach(todo => newState[todo.id] = todo);
+      action.todos.forEach(todo => ( newState[todo.id] = todo ));
+      return newState;
+    case RECEIVE_TODO:
+      newState[action.todo.id] = action.todo;
       return newState;
     default:
       return state;
